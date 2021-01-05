@@ -2,7 +2,7 @@ import { Component } from "react";
 import axios from "./axios";
 import { Link } from "react-router-dom";
 
-export default class Registration extends Component {
+export default class Login extends Component {
     constructor() {
         super();
         this.state = {
@@ -21,15 +21,16 @@ export default class Registration extends Component {
 
     handleClick() {
         axios
-            .post("/registration", this.state)
+            .post("/login", this.state)
             .then(() => {
+                console.log("logged in");
                 this.setState({
                     error: false,
                 });
                 location.replace("/");
             })
             .catch((err) => {
-                console.log("error in /registration post request", err);
+                console.log(err);
                 this.setState({
                     error: true,
                 });
@@ -38,22 +39,8 @@ export default class Registration extends Component {
 
     render() {
         return (
-            <div>
-                <h2>Registration</h2>
-                <input
-                    onChange={(e) => this.handleChange(e)}
-                    name="first"
-                    type="text"
-                    placeholder="First Name"
-                    required
-                />
-                <input
-                    onChange={(e) => this.handleChange(e)}
-                    name="last"
-                    type="text"
-                    placeholder="Last Name"
-                    required
-                />
+            <>
+                <h2>Login</h2>
                 <input
                     onChange={(e) => this.handleChange(e)}
                     name="email"
@@ -68,12 +55,16 @@ export default class Registration extends Component {
                     placeholder="Password"
                     required
                 />
+                <Link to="/resetPassword">
+                    Forgot your password? Click here
+                </Link>
+
                 {this.state.error && (
                     <span>Something went wrong, please try again.</span>
                 )}
                 <button onClick={() => this.handleClick()}>submit</button>
-                <Link to="/login">Click here to Log in!</Link>
-            </div>
+                <Link to="/">Not a user? Register here!</Link>
+            </>
         );
     }
 }

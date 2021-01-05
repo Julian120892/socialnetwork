@@ -5,6 +5,9 @@ const path = require("path");
 const db = require("./db");
 const cookieSession = require("cookie-session");
 const { hash, compare } = require("./bc");
+const csurf = require("csurf");
+const cryptoRandomString = require("crypto-random-string");
+const { sendEmail } = require("./ses");
 
 app.use(compression());
 
@@ -14,6 +17,14 @@ app.use(
         maxAge: 1000 * 60 * 60 * 24 * 14,
     })
 );
+
+app.use(csurf());
+
+app.use(function (req, res, next) {
+    res.cookie("mytoken", req.csrfToken());
+    next();
+});
+
 app.use(express.static(path.join(__dirname, "..", "client", "public")));
 app.use(express.json());
 
@@ -36,6 +47,91 @@ app.post("/registration", (req, res) => {
             console.log(err);
             res.sendStatus(300);
         });
+});
+
+app.post("/login", (req, res) => {
+    const { email, password } = req.body;
+
+    db.loginIn(email)
+        .then(({ rows }) => {
+            compare(password, rows[0].password).then((result) => {
+                if (result) {
+                    console.log("true");
+                    req.session.userId = rows[0].id;
+                    res.redirect("/");
+                } else {
+                    res.sendStatus(404);
+                }
+            });
+        })
+        .catch((err) => {
+            console.log(err);
+            res.sendStatus(300);
+        });
+});
+
+app.post("/password/reset/start", (req, res) => {
+    db.getEmail(req.body.email)
+        .then(({ rows }) => {
+            const secretCode = cryptoRandomString({
+                length: 6,
+            });
+            db.addResetCode(rows[0].email, secretCode)
+                .then(() => {
+                    sendEmail(
+                        rows[0].email,
+                        secretCode,
+                        "Here is your Code to reset your password"
+                    )
+                        .then(() => {
+                            res.json({ success: true });
+                        })
+                        .catch((err) => {
+                            console.log("error in sendEmail", err);
+                            res.sendStatus(400);
+                        });
+                })
+                .catch((err) => {
+                    console.log("error in db.addResetCode", err);
+                    res.sendStatus(500);
+                });
+        })
+        .catch((err) => {
+            console.log("error in db.getEmail", err);
+            res.sendStatus(400);
+        });
+});
+
+app.post("/password/reset/verify", (req, res) => {
+    const { code, password, email } = req.body;
+    if (!password || !email) {
+        res.sendStatus(400);
+    }
+    console.log(code, password, email);
+    hash(password).then((hash) => {
+        db.verifyCode(email)
+            .then(({ rows }) => {
+                console.log(rows);
+                if (rows[0].code === code) {
+                    console.log("success", rows[0].code);
+                    db.updatePassword(email, hash)
+                        .then(() => {
+                            console.log("successfull updated");
+                            res.json({ success: true });
+                        })
+                        .catch((err) => {
+                            console.log("error in db.updatePassword", err);
+                            res.sendStatus(400);
+                        });
+                } else {
+                    res.sendStatus(400);
+                }
+            })
+            .catch((err) => {
+                console.log("error in db.verifyCode", err);
+                res.sendStatus(400);
+            });
+    });
 });
 
 app.get("/welcome", (req, res) => {
