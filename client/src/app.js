@@ -48,11 +48,22 @@ export default class App extends Component {
     render() {
         return (
             <>
-                <h1>App</h1>
-                <ProfilePic
-                    profilepic={this.state.profilepic}
-                    toggleUploader={this.toggleUploader}
-                />
+                <header>
+                    <a className="logo" href="#">
+                        <img src="" alt="Logo" />
+                    </a>
+                    <nav>
+                        <ul>
+                            <a href="#">
+                                <li>Test Link</li>
+                            </a>
+                        </ul>
+                    </nav>
+                    <ProfilePic
+                        profilepic={this.state.profilepic}
+                        toggleUploader={this.toggleUploader}
+                    />
+                </header>
                 {this.state.uploaderIsVisible && (
                     <Uploader
                         setProfilepic={this.setProfilepic}
