@@ -8,6 +8,26 @@ const { hash, compare } = require("./bc");
 const csurf = require("csurf");
 const cryptoRandomString = require("crypto-random-string");
 const { sendEmail } = require("./ses");
+const s3 = require("./s3");
+const config = require("./config.json");
+const multer = require("multer");
+const uidSafe = require("uid-safe");
+const diskStorage = multer.diskStorage({
+    destination: (req, file, callback) => {
+        callback(null, __dirname + "/uploads");
+    },
+    filename: (req, file, callback) => {
+        uidSafe(24).then((uid) => {
+            callback(null, uid + path.extname(file.originalname));
+        });
+    },
+});
+const uploader = multer({
+    storage: diskStorage,
+    limits: {
+        fileSize: 20971520,
+    },
+});
 
 app.use(compression());
 
@@ -139,6 +159,31 @@ app.get("/welcome", (req, res) => {
         res.redirect("/");
     } else {
         res.sendFile(path.join(__dirname, "..", "client", "index.html"));
+    }
+});
+
+app.get("/userData", (req, res) => {
+    db.getUserData(req.session.userId).then(({ rows }) => {
+        // console.log(rows[0]);
+        res.json(rows[0]);
+    });
+});
+
+app.post("/upload", uploader.single("image"), s3.upload, (req, res) => {
+    if (req.file) {
+        const url = config.s3Url + req.file.filename;
+        let id = req.session.userId;
+
+        db.uploadProfilePic(url, id)
+            .then(({ rows }) => {
+                console.log(rows);
+                res.json(rows);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    } else {
+        res.json({ success: false });
     }
 });
 
