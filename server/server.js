@@ -187,6 +187,17 @@ app.post("/upload", uploader.single("image"), s3.upload, (req, res) => {
     }
 });
 
+app.post("/updateBio", (req, res) => {
+    db.updateBio(req.session.userId, req.body.draftBio)
+        .then(({ rows }) => {
+            res.json(rows[0]);
+        })
+        .catch((err) => {
+            console.log("error in updateBio", err);
+            res.sendStatus(400);
+        });
+});
+
 app.get("*", function (req, res) {
     if (!req.session.userId) {
         res.redirect("/welcome");
