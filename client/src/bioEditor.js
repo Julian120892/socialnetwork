@@ -85,10 +85,3 @@ export default class BioEditor extends Component {
         );
     }
 }
-
-//if bio display bio with update button
-//else display edit button
-//both buttons go to edit mode
-
-//button displays Edit or Add
-//on Edit prepopulate textarea with {bio}

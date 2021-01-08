@@ -1,9 +1,11 @@
 import { Component } from "react";
-import { HashRouter, Route } from "react-router-dom";
 import ProfilePic from "./profilePic";
 import Uploader from "./uploader";
 import axios from "./axios";
 import Profile from "./profile";
+import { BrowserRouter, Route } from "react-router-dom";
+import OtherProfile from "./otherProfile";
+import { Link } from "react-router-dom";
 
 export default class App extends Component {
     constructor() {
@@ -59,36 +61,60 @@ export default class App extends Component {
     render() {
         return (
             <>
-                <header>
-                    <a className="logo" href="#">
-                        <img src="" alt="Logo" />
-                    </a>
-                    <nav>
-                        <ul>
-                            <a href="#">
-                                <li>Test Link</li>
-                            </a>
-                        </ul>
-                    </nav>
-                    <ProfilePic
-                        profilepic={this.state.profilepic}
-                        toggleUploader={this.toggleUploader}
+                <BrowserRouter>
+                    <header>
+                        <a className="logo" href="#">
+                            <img src="" alt="Logo" />
+                        </a>
+                        <nav>
+                            <ul>
+                                <a href="#">
+                                    <li>Test Link</li>
+                                </a>
+                            </ul>
+                        </nav>
+
+                        <Link to="/">
+                            <ProfilePic
+                                profilepic={this.state.profilepic}
+                                // toggleUploader={this.toggleUploader}
+                            />
+                        </Link>
+                    </header>
+
+                    <Route
+                        exact
+                        path="/"
+                        render={() => (
+                            <Profile
+                                first={this.state.first}
+                                last={this.state.last}
+                                bio={this.state.bio}
+                                profilepic={this.state.profilepic}
+                                toggleUploader={this.toggleUploader}
+                                updateProfile={this.updateProfile}
+                            />
+                        )}
                     />
-                </header>
-                <Profile
-                    first={this.state.first}
-                    last={this.state.last}
-                    bio={this.state.bio}
-                    profilepic={this.state.profilepic}
-                    toggleUploader={this.toggleUploader}
-                    updateProfile={this.updateProfile}
-                />
-                {this.state.uploaderIsVisible && (
-                    <Uploader
-                        setProfilepic={this.setProfilepic}
-                        toggleUploader={this.toggleUploader}
+
+                    <Route
+                        path="/user/:id"
+                        render={(props) => (
+                            <OtherProfile
+                                match={props.match}
+                                key={props.match.url}
+                                history={props.history}
+                            />
+                        )}
                     />
-                )}
+
+                    {this.state.uploaderIsVisible && (
+                        <Uploader
+                            setProfilepic={this.setProfilepic}
+                            toggleUploader={this.toggleUploader}
+                        />
+                    )}
+                </BrowserRouter>
             </>
         );
     }

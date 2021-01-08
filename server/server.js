@@ -163,10 +163,30 @@ app.get("/welcome", (req, res) => {
 });
 
 app.get("/userData", (req, res) => {
-    db.getUserData(req.session.userId).then(({ rows }) => {
-        // console.log(rows[0]);
-        res.json(rows[0]);
-    });
+    db.getUserData(req.session.userId)
+        .then(({ rows }) => {
+            res.json(rows[0]);
+        })
+        .catch((err) => {
+            console.log("error in get user data ", err);
+        });
+});
+
+app.get("/user/:id/getUserData", (req, res) => {
+    db.getUserData(req.query.id)
+        .then(({ rows }) => {
+            if (rows[0] === undefined) {
+                console.error("No user Found");
+                res.json({ success: false });
+            } else {
+                rows[0].currentId = req.session.userId;
+            }
+            res.json(rows[0]);
+        })
+        .catch((err) => {
+            console.log("Error in getting Other User Data", err);
+            res.sendStatus(400);
+        });
 });
 
 app.post("/upload", uploader.single("image"), s3.upload, (req, res) => {

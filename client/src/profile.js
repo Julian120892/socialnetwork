@@ -12,7 +12,7 @@ export default function Profile({
     return (
         <div className="profile-page">
             <h1>
-                Profile {first} {last}
+                {first} {last}
             </h1>
             <Profilepic
                 profilepic={profilepic}
@@ -22,6 +22,3 @@ export default function Profile({
         </div>
     );
 }
-
-//destructure bio
-//pass bio to <Profilepic />
