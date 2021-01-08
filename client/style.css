@@ -48,3 +48,11 @@ nav a {
     height: 180px;
     border-radius: 5px;
 }
+
+.component {
+    margin-left: auto;
+    margin-right: auto;
+    width: 80vw;
+    background-color: lightskyblue;
+    padding: 20px;
+}

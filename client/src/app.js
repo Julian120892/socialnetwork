@@ -86,33 +86,39 @@ export default class App extends Component {
                         exact
                         path="/"
                         render={() => (
-                            <Profile
-                                first={this.state.first}
-                                last={this.state.last}
-                                bio={this.state.bio}
-                                profilepic={this.state.profilepic}
-                                toggleUploader={this.toggleUploader}
-                                updateProfile={this.updateProfile}
-                            />
+                            <div className="component">
+                                <Profile
+                                    first={this.state.first}
+                                    last={this.state.last}
+                                    bio={this.state.bio}
+                                    profilepic={this.state.profilepic}
+                                    toggleUploader={this.toggleUploader}
+                                    updateProfile={this.updateProfile}
+                                />
+                            </div>
                         )}
                     />
 
                     <Route
                         path="/user/:id"
                         render={(props) => (
-                            <OtherProfile
-                                match={props.match}
-                                key={props.match.url}
-                                history={props.history}
-                            />
+                            <div className="component">
+                                <OtherProfile
+                                    match={props.match}
+                                    key={props.match.url}
+                                    history={props.history}
+                                />
+                            </div>
                         )}
                     />
 
                     {this.state.uploaderIsVisible && (
-                        <Uploader
-                            setProfilepic={this.setProfilepic}
-                            toggleUploader={this.toggleUploader}
-                        />
+                        <div className="component">
+                            <Uploader
+                                setProfilepic={this.setProfilepic}
+                                toggleUploader={this.toggleUploader}
+                            />
+                        </div>
                     )}
                 </BrowserRouter>
             </>
