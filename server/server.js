@@ -180,8 +180,8 @@ app.get("/user/:id/getUserData", (req, res) => {
                 res.json({ success: false });
             } else {
                 rows[0].currentId = req.session.userId;
+                res.json(rows[0]);
             }
-            res.json(rows[0]);
         })
         .catch((err) => {
             console.log("Error in getting Other User Data", err);

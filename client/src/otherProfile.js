@@ -40,16 +40,14 @@ export default class OtherProfile extends Component {
         } else {
             return (
                 <div className="profile-page">
+                    <img
+                        className="profile-picture"
+                        src={this.state.profilepic}
+                        alt="other user profile Picture"
+                    />
                     <h1>
                         {this.state.first} {this.state.last}
                     </h1>
-                    <div>
-                        <img
-                            className="profile-picture"
-                            src={this.state.profilepic}
-                            alt="other user profile Picture"
-                        />
-                    </div>
                     <p>{this.state.bio}</p>
                 </div>
             );

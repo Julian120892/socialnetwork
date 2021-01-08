@@ -11,13 +11,13 @@ export default function Profile({
 }) {
     return (
         <div className="profile-page">
-            <h1>
-                {first} {last}
-            </h1>
             <Profilepic
                 profilepic={profilepic}
                 toggleUploader={toggleUploader}
             />
+            <h1>
+                {first} {last}
+            </h1>
             <BioEditor bio={bio} updateProfile={updateProfile} />
         </div>
     );
