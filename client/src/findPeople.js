@@ -7,14 +7,12 @@ export default function FindPeople() {
 
     useEffect(() => {
         let abort;
-        console.log("updated view");
 
         (async () => {
             if (!search) {
                 try {
                     const { data } = await axios.get("/users/most-recent");
                     if (!abort) {
-                        console.log(data);
                         setResults(data);
                     }
                 } catch (error) {
@@ -24,7 +22,6 @@ export default function FindPeople() {
                 try {
                     const { data } = await axios.get(`/users/search/${search}`);
                     if (!abort) {
-                        console.log(data);
                         setResults(data);
                     }
                 } catch (error) {
@@ -34,7 +31,6 @@ export default function FindPeople() {
         })();
 
         return () => {
-            console.log("udate search");
             abort = true;
         };
     }, [search]);
