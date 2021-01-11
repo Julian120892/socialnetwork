@@ -15,8 +15,8 @@ export default function FindPeople() {
                     if (!abort) {
                         setResults(data);
                     }
-                } catch (error) {
-                    console.log("error");
+                } catch (err) {
+                    console.log("error in axios most recent users", err);
                 }
             } else {
                 try {
@@ -24,7 +24,7 @@ export default function FindPeople() {
                     if (!abort) {
                         setResults(data);
                     }
-                } catch (error) {
+                } catch (err) {
                     console.log("error in search", err);
                 }
             }

@@ -102,7 +102,7 @@ export default class App extends Component {
 
                     <Route
                         path="/users"
-                        render={(props) => (
+                        render={() => (
                             <div className="component">
                                 <FindPeople />
                             </div>
