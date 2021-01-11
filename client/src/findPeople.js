@@ -11,16 +11,24 @@ export default function FindPeople() {
 
         (async () => {
             if (!search) {
-                const { data } = await axios.get("/users/most-recent");
-                if (!abort) {
-                    console.log(data);
-                    setResults(data);
+                try {
+                    const { data } = await axios.get("/users/most-recent");
+                    if (!abort) {
+                        console.log(data);
+                        setResults(data);
+                    }
+                } catch (error) {
+                    console.log("error");
                 }
             } else {
-                const { data } = await axios.get(`/users/search/${search}`);
-                if (!abort) {
-                    console.log(data);
-                    setResults(data);
+                try {
+                    const { data } = await axios.get(`/users/search/${search}`);
+                    if (!abort) {
+                        console.log(data);
+                        setResults(data);
+                    }
+                } catch (error) {
+                    console.log("error in search", err);
                 }
             }
         })();
