@@ -6,6 +6,7 @@ import Profile from "./profile";
 import { BrowserRouter, Route } from "react-router-dom";
 import OtherProfile from "./otherProfile";
 import { Link } from "react-router-dom";
+import FindPeople from "./findPeople";
 
 export default class App extends Component {
     constructor() {
@@ -96,6 +97,15 @@ export default class App extends Component {
                                     updateProfile={this.updateProfile}
                                 />
                             </div>
+                        )}
+                    />
+
+                    <Route
+                        path="/users"
+                        render={(props) => (
+                            <>
+                                <FindPeople />
+                            </>
                         )}
                     />
 

@@ -61,6 +61,15 @@ module.exports.getUserData = (id) => {
     return db.query(q, params);
 };
 
+module.exports.findUsers = (userInput) => {
+    const q = `SELECT * 
+                FROM users 
+                WHERE first ILIKE $1
+    `;
+    const params = [userInput + "%"];
+    return db.query(q, params);
+};
+
 module.exports.uploadProfilePic = (url, id) => {
     console.log("server upload of picture");
     const q = ` 

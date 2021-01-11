@@ -218,6 +218,16 @@ app.post("/updateBio", (req, res) => {
         });
 });
 
+app.get("/users/search/:username", (req, res) => {
+    db.findUsers(req.params.username)
+        .then(({ rows }) => {
+            res.json(rows);
+        })
+        .catch((err) => {
+            console.log("Error in db.findUsers", err);
+        });
+});
+
 app.get("*", function (req, res) {
     if (!req.session.userId) {
         res.redirect("/welcome");
