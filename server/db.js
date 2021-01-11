@@ -62,12 +62,22 @@ module.exports.getUserData = (id) => {
 };
 
 module.exports.findUsers = (userInput) => {
-    const q = `SELECT * 
+    const q = `SELECT first, last, profilepic, bio, id 
                 FROM users 
                 WHERE first ILIKE $1
+                LIMIT 6
     `;
     const params = [userInput + "%"];
     return db.query(q, params);
+};
+
+module.exports.getMostRecentUsers = () => {
+    const q = `SELECT first, last, profilepic, bio, id 
+                FROM users                    
+                ORDER BY id 
+                DESC LIMIT 3;
+    `;
+    return db.query(q);
 };
 
 module.exports.uploadProfilePic = (url, id) => {

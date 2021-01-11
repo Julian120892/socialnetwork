@@ -225,6 +225,18 @@ app.get("/users/search/:username", (req, res) => {
         })
         .catch((err) => {
             console.log("Error in db.findUsers", err);
+            res.sendStatus(500);
+        });
+});
+
+app.get("/users/most-recent", (req, res) => {
+    db.getMostRecentUsers()
+        .then(({ rows }) => {
+            res.json(rows);
+        })
+        .catch((err) => {
+            console.log("error in db getMostRecentUseres", err);
+            res.sendStatus(500);
         });
 });
 

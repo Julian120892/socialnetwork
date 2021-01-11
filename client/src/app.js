@@ -103,9 +103,9 @@ export default class App extends Component {
                     <Route
                         path="/users"
                         render={(props) => (
-                            <>
+                            <div className="component">
                                 <FindPeople />
-                            </>
+                            </div>
                         )}
                     />
 

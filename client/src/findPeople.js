@@ -7,15 +7,21 @@ export default function FindPeople() {
 
     useEffect(() => {
         let abort;
-        console.log(results);
+        console.log("updated view");
 
         (async () => {
-            const { data } = await axios.get(`/users/search/${search}`);
-
-            if (!abort) {
-                // console.log("data from request", data);
-                setResults(data);
-                console.log("results in function", results);
+            if (!search) {
+                const { data } = await axios.get("/users/most-recent");
+                if (!abort) {
+                    console.log(data);
+                    setResults(data);
+                }
+            } else {
+                const { data } = await axios.get(`/users/search/${search}`);
+                if (!abort) {
+                    console.log(data);
+                    setResults(data);
+                }
             }
         })();
 
@@ -31,12 +37,23 @@ export default function FindPeople() {
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search"
             />
-            <ul>
+
+            <div>
                 {!results.length && search && <li>Nothing Found</li>}
-                {/* {results.map((result, index) => (
-                    <li key={index}>{result}</li>
-                ))} */}
-            </ul>
+                {results.map((result, index) => (
+                    <div key={index} className="usersThumbnail">
+                        <img
+                            className="profile-picture"
+                            src={result.profilepic}
+                        />
+                        <h2>
+                            {result.first}
+                            {result.last}
+                        </h2>
+                        <p>{result.bio}</p>
+                    </div>
+                ))}
+            </div>
         </div>
     );
 }
