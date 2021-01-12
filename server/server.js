@@ -3,6 +3,7 @@ const app = express();
 const compression = require("compression");
 const path = require("path");
 const db = require("./db");
+const friendstatus = require("./friendstatus");
 const cookieSession = require("cookie-session");
 const { hash, compare } = require("./bc");
 const csurf = require("csurf");
@@ -238,6 +239,60 @@ app.get("/users/most-recent", (req, res) => {
             console.log("error in db getMostRecentUseres", err);
             res.sendStatus(500);
         });
+});
+
+app.get("/friendship-status/:otherUserId", (req, res) => {
+    let id = req.session.userId;
+    let otherUserId = Number(req.params.otherUserId);
+    console.log("request to friendship status", otherUserId, id);
+
+    friendstatus
+        .getFriendshipStatus(id, otherUserId)
+        .then(({ rows }) => {
+            console.log(rows);
+            res.json(rows);
+        })
+        .catch((err) => {
+            console.log("error in getFriendshipStatus", err);
+            res.sendStatus(500);
+        });
+});
+
+app.post("/friendship-status/update/:otherUserId", (req, res) => {
+    console.log("update friendstatus", req.body);
+
+    let id = req.session.userId;
+    let otherUserId = Number(req.body.otherUserId);
+
+    if (req.body.buttonText == "add as Friend") {
+        friendstatus
+            .addFriend(id, otherUserId)
+            .then(({ rows }) => {
+                res.json({ otherUserId });
+            })
+            .catch((err) => console.log(err));
+    } else if (req.body.buttonText == "Unfriend") {
+        friendstatus
+            .unfriend(id, otherUserId)
+            .then(() => {
+                res.json({ otherUserId });
+            })
+            .catch((err) => console.log(err));
+    } else if (req.body.buttonText == "cancel request") {
+        friendstatus
+            .cancelRequest(id, otherUserId)
+            .then(() => {
+                res.json({ otherUserId });
+            })
+            .catch((err) => console.log(err));
+    } else if (req.body.buttonText == "accept Request") {
+        friendstatus
+            .acceptRequest(id, otherUserId)
+            .then(() => {
+                res.json({ otherUserId });
+            })
+            .catch((err) => console.log(err));
+    }
 });
 
 app.get("*", function (req, res) {

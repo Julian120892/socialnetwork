@@ -1,0 +1,90 @@
+Component: Button with diffrent states 
+--> friendrequest, cancelrequest, acceptrequest, friend, unfriend
+
+Actions:
+- make Request
+- cancel Request
+- accept Request
+- unfriend
+
+Statuses:
+- No Friendship (request)
+- Pending Request (cancel or accept)
+- Friendship (unfriend)
+
+DATA:
+- sender_id
+- recipient_id
+- accept (true or false)
+
+
+____________________________________________________
+
+CREATE TABLE friendships (
+    id SERIAL PRIMARY KEY,
+    sender_id INT REFERENCES users(id) NOT NULL,
+    recipient_id INT REFERENCES users(id) NOT NULL
+    accepted BOOLEAN DEFAULT false,
+)
+
+SELECT * FROM friendships 
+WHERE (recipient_id = $1 AND sender_id =$2) 
+OR (recipient_id =$2 AND sender_id=$1)
+____________________________________________________
+
+//get otherUserId from url stringToNumber()
+
+app.get("/friendship-status/:ohterUserId", (req, res) => {
+    db.getFriendstatus... (friendshipQuerys.js anlegen?)
+})
+
+app.post("/friendship-action", (req, res) => {
+
+const userId = req.session.id
+const {action, otherUserId} = req.body
+
+        if(action == "cancel"){
+        db.cancelFriendship
+    } else if  (action == "make"){
+        db.makeFriends
+    }
+})
+____________________________________________________
+
+FriendshipButton Component:
+
+export default function FriendshipButton(){
+
+const [buttonText, setButtonText] = useState();
+
+useEffect(()=>{
+    axios.get(/friendship-status/${ohterUserId}).then(({data}) => {
+
+
+        const text = friendshiptStatusToButtonText(data)
+        setButtonText(buttonText)
+
+    })
+}, [ohterUserId])
+
+function friendshiptStatusToButtonText(friendshiptStauts){
+    const {recipient_id, sender_id, accept} = friendshipStauts
+    //logig here
+    return buttonText
+}
+
+handleClick = () => {
+    axios.post("friendship-action", {} => {
+        //update button text here
+                //send action attribute to server bsp: {action: "cancel", otherUserId: 12}
+
+    })
+}
+
+return(
+    <>
+     <button onClick={handleClick}>{buttonText}</button>
+    </>
+)
+
+}
