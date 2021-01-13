@@ -265,31 +265,35 @@ app.post("/friendship-status/update/:otherUserId", (req, res) => {
     let otherUserId = Number(req.body.otherUserId);
 
     if (req.body.buttonText == "add as Friend") {
+        let newStatus = "cancel request";
         friendstatus
             .addFriend(id, otherUserId)
-            .then(({ rows }) => {
-                res.json({ otherUserId });
+            .then(() => {
+                res.json({ otherUserId, newStatus });
             })
             .catch((err) => console.log(err));
     } else if (req.body.buttonText == "Unfriend") {
+        let newStatus = "add as Friend";
         friendstatus
             .unfriend(id, otherUserId)
             .then(() => {
-                res.json({ otherUserId });
+                res.json({ otherUserId, newStatus });
             })
             .catch((err) => console.log(err));
     } else if (req.body.buttonText == "cancel request") {
+        let newStatus = "add as Friend";
         friendstatus
             .cancelRequest(id, otherUserId)
             .then(() => {
-                res.json({ otherUserId });
+                res.json({ otherUserId, newStatus });
             })
             .catch((err) => console.log(err));
     } else if (req.body.buttonText == "accept Request") {
+        let newStatus = "Unfriend";
         friendstatus
             .acceptRequest(id, otherUserId)
             .then(() => {
-                res.json({ otherUserId });
+                res.json({ otherUserId, newStatus });
             })
             .catch((err) => console.log(err));
     }
