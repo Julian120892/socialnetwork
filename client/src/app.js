@@ -7,6 +7,7 @@ import { BrowserRouter, Route } from "react-router-dom";
 import OtherProfile from "./otherProfile";
 import { Link } from "react-router-dom";
 import FindPeople from "./findPeople";
+import Friends from "./friends";
 
 export default class App extends Component {
     constructor() {
@@ -105,6 +106,15 @@ export default class App extends Component {
                         render={() => (
                             <div className="component">
                                 <FindPeople />
+                            </div>
+                        )}
+                    />
+
+                    <Route
+                        path="/friends"
+                        render={() => (
+                            <div className="component">
+                                <Friends />
                             </div>
                         )}
                     />

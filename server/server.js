@@ -258,11 +258,33 @@ app.get("/friendship-status/:otherUserId", (req, res) => {
         });
 });
 
-app.post("/friendship-status/update/:otherUserId", (req, res) => {
-    console.log("update friendstatus", req.body);
-
+app.post("/friends/accept/:otherUserId", (req, res) => {
     let id = req.session.userId;
     let otherUserId = Number(req.body.otherUserId);
+    friendstatus
+        .acceptRequest(id, otherUserId)
+        .then(({ rows }) => {
+            res.json({ otherUserId });
+        })
+        .catch((err) => console.log(err));
+});
+
+app.post("/friends/unfriend/:otherUserId", (req, res) => {
+    let id = req.session.userId;
+    let otherUserId = Number(req.body.otherUserId);
+    friendstatus
+        .unfriend(id, otherUserId)
+        .then(() => {
+            res.json({ otherUserId });
+        })
+        .catch((err) => console.log(err));
+});
+
+app.post("/friendship-status/update/:otherUserId", (req, res) => {
+    let id = req.session.userId;
+    let otherUserId = Number(req.body.otherUserId);
+
+    console.log("updated friendship status for: ", otherUserId);
 
     if (req.body.buttonText == "add as Friend") {
         let newStatus = "cancel request";
@@ -297,6 +319,21 @@ app.post("/friendship-status/update/:otherUserId", (req, res) => {
             })
             .catch((err) => console.log(err));
     }
+});
+
+app.get("/getListOfFriendsAndRequests", (req, res) => {
+    friendstatus
+        .getListOfFriends(req.session.userId)
+        .then(({ rows }) => {
+            if (!rows[0]) {
+                console.log("no requests or Friends");
+            } else {
+                res.json(rows);
+            }
+        })
+        .catch((err) =>
+            console.log("error in friendstatus.getListofFriends", err)
+        );
 });
 
 app.get("*", function (req, res) {
