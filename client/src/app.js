@@ -6,8 +6,8 @@ import Profile from "./profile";
 import { BrowserRouter, Route } from "react-router-dom";
 import OtherProfile from "./otherProfile";
 import { Link } from "react-router-dom";
-import FindPeople from "./findPeople";
 import Friends from "./friends";
+import FindPeople from "./findPeople";
 
 export default class App extends Component {
     constructor() {

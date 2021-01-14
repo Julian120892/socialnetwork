@@ -1,5 +1,5 @@
-import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
 import {
     getListOfFriendsAndRequests,
     acceptRequest,
@@ -59,7 +59,6 @@ export default function Friends() {
                                 {result.last}
                             </h2>
                         </Link>
-
                         <button
                             id={result.id}
                             onClick={(e) => dispatch(unfriendFriend(e))}

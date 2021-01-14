@@ -10,8 +10,8 @@ const csurf = require("csurf");
 const cryptoRandomString = require("crypto-random-string");
 const { sendEmail } = require("./ses");
 const s3 = require("./s3");
-const config = require("./config.json");
 const multer = require("multer");
+const config = require("./config.json");
 const uidSafe = require("uid-safe");
 const diskStorage = multer.diskStorage({
     destination: (req, file, callback) => {
@@ -263,7 +263,7 @@ app.post("/friends/accept/:otherUserId", (req, res) => {
     let otherUserId = Number(req.body.otherUserId);
     friendstatus
         .acceptRequest(id, otherUserId)
-        .then(({ rows }) => {
+        .then(() => {
             res.json({ otherUserId });
         })
         .catch((err) => console.log(err));

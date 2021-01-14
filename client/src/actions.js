@@ -14,7 +14,6 @@ export async function acceptRequest(e) {
     await axios.post(`/friends/accept/${otherUserId}`, {
         otherUserId,
     });
-
     return {
         type: "ACCEPT_REQUEST",
         data: otherUserId,
@@ -26,7 +25,6 @@ export async function unfriendFriend(e) {
     await axios.post(`/friends/unfriend/${otherUserId}`, {
         otherUserId,
     });
-
     return {
         type: "UNFRIEND",
         data: otherUserId,

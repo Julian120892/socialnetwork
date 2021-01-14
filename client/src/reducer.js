@@ -10,8 +10,8 @@ export function reducer(state = {}, action) {
             friends: stayInFriendsList,
         };
     }
-    ///////ACCEPT BUTTON/////////
 
+    ///////ACCEPT BUTTON/////////
     if (action.type == "ACCEPT_REQUEST") {
         const stayInRequestList = state.requests.filter((value) => {
             return value.id !== action.data;
@@ -31,7 +31,6 @@ export function reducer(state = {}, action) {
     }
 
     ///////GET FRIEND LIST/////////
-
     if (action.type == "GET_FRIENDS_AND_REQUESTS") {
         const friendList = action.data.filter((user) => {
             if (user.accepted == true) {

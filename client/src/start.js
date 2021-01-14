@@ -4,8 +4,8 @@ import reduxPromise from "redux-promise";
 import { reducer } from "./reducer";
 import { Provider } from "react-redux";
 import { composeWithDevTools } from "redux-devtools-extension";
-import Welcome from "./welcome";
 import App from "./app";
+import Welcome from "./welcome";
 
 let elem;
 const store = createStore(

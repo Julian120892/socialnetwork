@@ -26,14 +26,7 @@ SELECT * FROM friendships
 
 
 
-
-
-
-
-
-
-
-  INSERT INTO friendships (sender_id, recipient_id, accepted)
+INSERT INTO friendships (sender_id, recipient_id, accepted)
 VALUES (265, 144, false);
 
 INSERT INTO friendships (sender_id, recipient_id, accepted)
