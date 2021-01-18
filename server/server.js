@@ -1,5 +1,10 @@
 const express = require("express");
 const app = express();
+const server = require("http").Server(app);
+const io = require("socket.io")(server, {
+    allowRequest: (req, callback) =>
+        callback(null, req.headers.referer.startsWith("http://localhost:3000")),
+});
 const compression = require("compression");
 const path = require("path");
 const db = require("./db");
@@ -32,12 +37,22 @@ const uploader = multer({
 
 app.use(compression());
 
-app.use(
-    cookieSession({
-        secret: "This is a secret",
-        maxAge: 1000 * 60 * 60 * 24 * 14,
-    })
-);
+// app.use(
+//     cookieSession({
+//         secret: "This is a secret",
+//         maxAge: 1000 * 60 * 60 * 24 * 14,
+//     })
+// );
+
+const cookieSessionMiddleware = cookieSession({
+    secret: `crocs are awesome`,
+    maxAge: 1000 * 60 * 60 * 24 * 14,
+});
+
+app.use(cookieSessionMiddleware);
+io.use(function (socket, next) {
+    cookieSessionMiddleware(socket.request, socket.request.res, next);
+});
 
 app.use(csurf());
 
@@ -346,4 +361,30 @@ app.get("*", function (req, res) {
 
 app.listen(process.env.PORT || 3001, function () {
     console.log("I'm listening.");
+});
+
+io.on("connection", (socket) => {
+    console.log(`socket woth id ${socket.id}`);
+    console.log("socket.request.session", socket.request.session);
+
+    socket.on("messageSend", (message) => {
+        //1. INSERT in DATABASE table "chat_messages" (id, message, userId (link chat with users), timestamp)
+        //2. emit a message back to the client --> to redux's global state
+        //(message, name, id, profilepic, timestamp) from DB
+        io.sockets.emit("updateChat", {
+            message: message,
+            id: "req.cookieSession.userId",
+            profilePic: "#",
+            name: "testName",
+            timestamp: "testtimestamp",
+        }); //sends to everyone
+    });
+
+    //code for rendering messages
+    //get DATABASE 10 most recent messages (retrieve JOIN from users and chat_messages)
+    //emit them to state
+    //render them
+    db.getMostRecentMessages().then((results) => {
+        socket.emit("mostRecentMessages", results); //just to the one person
+    });
 });

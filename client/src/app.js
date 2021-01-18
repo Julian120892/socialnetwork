@@ -8,6 +8,7 @@ import OtherProfile from "./otherProfile";
 import { Link } from "react-router-dom";
 import Friends from "./friends";
 import FindPeople from "./findPeople";
+import Chat from "./chat";
 
 export default class App extends Component {
     constructor() {
