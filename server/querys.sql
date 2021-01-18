@@ -70,3 +70,13 @@ VALUES (210, 265, true);
 
 INSERT INTO friendships (sender_id, recipient_id, accepted)
 VALUES (144, 265, false);
+
+
+CREATE TABLE chat_messages(
+  id SERIAL PRIMARY KEY,
+  user_id INT REFERENCES users(id) NOT NULL,
+  messages VARCHAR NOT NULL
+);
+
+INSERT INTO chat_messages (user_id, messages)
+VALUES (98, 'Das noch eine ist eine Test Nachricht');

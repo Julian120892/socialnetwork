@@ -105,3 +105,14 @@ module.exports.updateBio = (id, bio) => {
     const params = [id, bio];
     return db.query(q, params);
 };
+
+module.exports.getMostRecentMessages = () => {
+    const q = `
+    SELECT first, last, profilepic, timestamp, messages
+    FROM chat_messages
+    JOIN users
+    ON ( user_id = users.id)
+    LIMIT 5;
+    `;
+    return db.query(q);
+};

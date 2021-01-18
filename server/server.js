@@ -359,32 +359,33 @@ app.get("*", function (req, res) {
     }
 });
 
-app.listen(process.env.PORT || 3001, function () {
-    console.log("I'm listening.");
-});
-
 io.on("connection", (socket) => {
     console.log(`socket woth id ${socket.id}`);
     console.log("socket.request.session", socket.request.session);
 
-    socket.on("messageSend", (message) => {
-        //1. INSERT in DATABASE table "chat_messages" (id, message, userId (link chat with users), timestamp)
-        //2. emit a message back to the client --> to redux's global state
-        //(message, name, id, profilepic, timestamp) from DB
-        io.sockets.emit("updateChat", {
-            message: message,
-            id: "req.cookieSession.userId",
-            profilePic: "#",
-            name: "testName",
-            timestamp: "testtimestamp",
-        }); //sends to everyone
+    db.getMostRecentMessages().then(({ rows }) => {
+        console.log(rows[0]);
+        socket.emit("mostRecentMessages", rows[0]); //just to the one person
     });
 
-    //code for rendering messages
-    //get DATABASE 10 most recent messages (retrieve JOIN from users and chat_messages)
-    //emit them to state
-    //render them
-    db.getMostRecentMessages().then((results) => {
-        socket.emit("mostRecentMessages", results); //just to the one person
+    socket.on("disconnect", function () {
+        console.log(`socket with the id ${socket.id} is now disconnected`);
     });
+
+    // socket.on("messageSend", (message) => {
+    //     //1. INSERT in DATABASE table "chat_messages" (id, message, userId (link chat with users), timestamp)
+    //     //2. emit a message back to the client --> to redux's global state
+    //     //(message, name, id, profilepic, timestamp) from DB
+    //     io.sockets.emit("updateChat", {
+    //         message: message,
+    //         id: "req.cookieSession.userId",
+    //         profilePic: "#",
+    //         name: "testName",
+    //         timestamp: "testtimestamp",
+    //     }); //sends to everyone
+    // });
+});
+
+server.listen(process.env.PORT || 3001, function () {
+    console.log("I'm listening.");
 });

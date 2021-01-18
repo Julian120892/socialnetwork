@@ -133,6 +133,15 @@ export default class App extends Component {
                         )}
                     />
 
+                    <Route
+                        path="/chat"
+                        render={() => (
+                            <div className="component">
+                                <Chat />
+                            </div>
+                        )}
+                    />
+
                     {this.state.uploaderIsVisible && (
                         <div className="component">
                             <Uploader
