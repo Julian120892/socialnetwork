@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "./axios";
+import { Link } from "react-router-dom";
 
 export default function FindPeople() {
     const [search, setSearch] = useState("");
@@ -46,15 +47,19 @@ export default function FindPeople() {
                 {!results.length && search && <li>Nothing Found</li>}
                 {results.map((result, index) => (
                     <div key={index} className="usersThumbnail">
-                        <img
-                            className="profile-picture"
-                            src={result.profilepic}
-                        />
-                        <h2>
-                            {result.first}
-                            {result.last}
-                        </h2>
-                        <p>{result.bio}</p>
+                        <Link to={"user/" + result.id}>
+                            <>
+                                <img
+                                    className="profile-picture"
+                                    src={result.profilepic}
+                                />
+                                <h2>
+                                    {result.first}
+                                    {result.last}
+                                </h2>
+                                <p>{result.bio}</p>
+                            </>
+                        </Link>
                     </div>
                 ))}
             </div>

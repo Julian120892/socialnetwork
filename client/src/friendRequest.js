@@ -9,10 +9,6 @@ export default function FriendRequest() {
     const [buttonText, setButtonText] = useState();
     const [otherUserId, setOtherUserId] = useState(lastSegment);
 
-    //on Click wird button text geupdated, aber data
-    //in useEffect() bleibt leer. Deswegen funktionert
-    //direkt der nächste Click nicht, da er keine daten hat
-
     useEffect(() => {
         console.log("updating render");
         axios

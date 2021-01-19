@@ -70,11 +70,11 @@ export default class App extends Component {
                             <img src="" alt="Logo" />
                         </a>
                         <nav>
-                            <ul>
-                                <a href="#">
-                                    <li>Test Link</li>
-                                </a>
-                            </ul>
+                            <Link to="/chat">Chat</Link>
+                            <br />
+                            <Link to="/users">Seach Users</Link>
+                            <br />
+                            <Link to="/">Profile</Link>
                         </nav>
 
                         <Link to="/">
