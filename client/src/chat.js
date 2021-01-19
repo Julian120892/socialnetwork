@@ -1,32 +1,49 @@
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { socket } from "./socket";
 
 export default function Chat() {
-    //1.retrive chat messages
-    const chatMessages = useSelector((state) => state && state.chatMessages);
-    //2. post new messages
+    const chatMessages = useSelector((state) => state);
+
+    useEffect(() => {
+        // if (chatMessages.message) {
+        //     e.target.reset();
+        // }
+    });
 
     const handleKeyDown = (e) => {
         if (e.key === "Enter") {
-            console.log("user pressed enter key.");
-            //send message to server via emit
             socket.emit("messageSend", e.target.value);
+            e.target.value = null;
         }
     };
 
-    return (
-        <>
-            <h1>This is the Chat</h1>
-            <div className="chat-container">
-                <p>dummy message...</p>
-                <p>dummy message...</p>
-                <p>dummy message...</p>
-                <p>dummy message...</p>
-                <p>dummy message...</p>
-                <p>dummy message...</p>
-                <p>dummy message...</p>
-            </div>
-            <textarea onKeyDown={handleKeyDown} />
-        </>
-    );
+    if (chatMessages.message) {
+        return (
+            <>
+                <h1>This is the Chat</h1>
+                {chatMessages.message.map((result, index) => (
+                    <div key={index} className="chat-container">
+                        <img
+                            className="profile-picture"
+                            src={result.profilepic}
+                        />
+                        <p>
+                            {result.first} {result.last}
+                        </p>
+                        <p>{result.timestamp}</p>
+                        <h2>{result.messages}</h2>
+                    </div>
+                ))}
+
+                <textarea onKeyDown={handleKeyDown} />
+            </>
+        );
+    } else {
+        return (
+            <>
+                <h1>Loading last conversation...</h1>
+            </>
+        );
+    }
 }

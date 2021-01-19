@@ -31,20 +31,16 @@ export async function unfriendFriend(e) {
     };
 }
 
-export async function addMostRecentMessages() {
-    console.log("hello");
-
+export async function addMostRecentMessages(dataArr) {
     return {
         type: "ADD_MOST_RECENT_MESSAGES",
-        data: "hello",
+        data: dataArr,
     };
 }
 
-export async function postNewMessage() {
-    console.log("hello");
-
+export async function postNewMessage(messageData) {
     return {
         type: "POST_NEW_MESSAGE",
-        data: "hello",
+        data: messageData,
     };
 }

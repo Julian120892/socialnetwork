@@ -360,30 +360,30 @@ app.get("*", function (req, res) {
 });
 
 io.on("connection", (socket) => {
-    console.log(`socket woth id ${socket.id}`);
-    console.log("socket.request.session", socket.request.session);
-
-    db.getMostRecentMessages().then(({ rows }) => {
-        console.log(rows[0]);
-        socket.emit("mostRecentMessages", rows[0]); //just to the one person
-    });
+    // console.log(`socket woth id ${socket.id}`);
+    // console.log("socket.request.session", socket.request.session);
 
     socket.on("disconnect", function () {
-        console.log(`socket with the id ${socket.id} is now disconnected`);
+        // console.log(`socket with the id ${socket.id} is now disconnected`);
     });
 
-    // socket.on("messageSend", (message) => {
-    //     //1. INSERT in DATABASE table "chat_messages" (id, message, userId (link chat with users), timestamp)
-    //     //2. emit a message back to the client --> to redux's global state
-    //     //(message, name, id, profilepic, timestamp) from DB
-    //     io.sockets.emit("updateChat", {
-    //         message: message,
-    //         id: "req.cookieSession.userId",
-    //         profilePic: "#",
-    //         name: "testName",
-    //         timestamp: "testtimestamp",
-    //     }); //sends to everyone
-    // });
+    db.getMostRecentMessages().then(({ rows }) => {
+        socket.emit("mostRecentMessages", rows);
+    });
+
+    socket.on("messageSend", (message) => {
+        db.addMessage(message, socket.request.session.userId).then((result) => {
+            db.getUserData(socket.request.session.userId).then(({ rows }) => {
+                io.sockets.emit("updateChat", {
+                    messages: message,
+                    profilepic: rows[0].profilepic,
+                    first: rows[0].first,
+                    last: rows[0].last,
+                    timestamp: result.rows[0].timestamp,
+                });
+            });
+        });
+    });
 });
 
 server.listen(process.env.PORT || 3001, function () {

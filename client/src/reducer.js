@@ -53,6 +53,24 @@ export function reducer(state = {}, action) {
             requests: requestList,
         };
     }
+    ///////GET MOST RECENT MESSAGES/////////
+    if (action.type == "ADD_MOST_RECENT_MESSAGES") {
+        console.log("dA in reducer", action.data.reverse());
+
+        state = {
+            ...state,
+            message: action.data,
+        };
+    }
+
+    if (action.type == "POST_NEW_MESSAGE") {
+        const newMessage = [...state.message, action.data];
+
+        state = {
+            ...state,
+            message: newMessage,
+        };
+    }
 
     ///////
     return state;

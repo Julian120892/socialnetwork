@@ -112,7 +112,18 @@ module.exports.getMostRecentMessages = () => {
     FROM chat_messages
     JOIN users
     ON ( user_id = users.id)
+    ORDER BY timestamp DESC
     LIMIT 5;
     `;
     return db.query(q);
+};
+
+module.exports.addMessage = (message, user_id) => {
+    const q = ` 
+        INSERT INTO chat_messages (messages, user_id)
+        VALUES ($1, $2)
+        RETURNING *;
+    `;
+    const params = [message, user_id];
+    return db.query(q, params);
 };

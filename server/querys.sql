@@ -76,6 +76,7 @@ CREATE TABLE chat_messages(
   id SERIAL PRIMARY KEY,
   user_id INT REFERENCES users(id) NOT NULL,
   messages VARCHAR NOT NULL
+  timestamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 INSERT INTO chat_messages (user_id, messages)

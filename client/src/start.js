@@ -17,7 +17,7 @@ const store = createStore(
 if (location.pathname === "/welcome") {
     elem = <Welcome />;
 } else {
-    init();
+    init(store);
     elem = (
         <Provider store={store}>
             <App />
