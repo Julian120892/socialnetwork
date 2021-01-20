@@ -58,8 +58,8 @@ export default class Login extends Component {
     render() {
         if (this.state.view === 1) {
             return (
-                <>
-                    <div>
+                <div className="container">
+                    <div className="login">
                         <h3>
                             Please enter your email address with which you
                             registered
@@ -78,7 +78,7 @@ export default class Login extends Component {
                             get Code
                         </button>
                     </div>
-                </>
+                </div>
             );
         } else if (this.state.view === 2) {
             return (

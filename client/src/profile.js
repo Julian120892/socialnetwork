@@ -15,10 +15,10 @@ export default function Profile({
                 profilepic={profilepic}
                 toggleUploader={toggleUploader}
             />
-            <h1>
-                {first} {last}
-            </h1>
-            <BioEditor bio={bio} updateProfile={updateProfile} />
+            <div className="profile-text">
+                <h1>{first}</h1>
+                <BioEditor bio={bio} updateProfile={updateProfile} />
+            </div>
         </div>
     );
 }

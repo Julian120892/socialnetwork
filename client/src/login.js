@@ -39,32 +39,34 @@ export default class Login extends Component {
 
     render() {
         return (
-            <>
-                <h2>Login</h2>
-                <input
-                    onChange={(e) => this.handleChange(e)}
-                    name="email"
-                    type="email"
-                    placeholder="Email"
-                    required
-                />
-                <input
-                    onChange={(e) => this.handleChange(e)}
-                    name="password"
-                    type="password"
-                    placeholder="Password"
-                    required
-                />
-                <Link to="/resetPassword">
-                    Forgot your password? Click here
-                </Link>
+            <div className="container">
+                <div className="login">
+                    <h2>Login</h2>
+                    <input
+                        onChange={(e) => this.handleChange(e)}
+                        name="email"
+                        type="email"
+                        placeholder="Email"
+                        required
+                    />
+                    <input
+                        onChange={(e) => this.handleChange(e)}
+                        name="password"
+                        type="password"
+                        placeholder="Password"
+                        required
+                    />
+                    <Link to="/resetPassword">
+                        Forgot your password? Click here
+                    </Link>
 
-                {this.state.error && (
-                    <span>Something went wrong, please try again.</span>
-                )}
-                <button onClick={() => this.handleClick()}>submit</button>
-                <Link to="/">Not a user? Register here!</Link>
-            </>
+                    {this.state.error && (
+                        <span>Something went wrong, please try again.</span>
+                    )}
+                    <button onClick={() => this.handleClick()}>submit</button>
+                    <Link to="/">Not a user? Register here!</Link>
+                </div>
+            </div>
         );
     }
 }

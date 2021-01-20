@@ -52,24 +52,25 @@ export default class BioEditor extends Component {
                 {!this.state.editModeVisible && (
                     <>
                         {this.state.userBioOnScreen && <p>{this.props.bio}</p>}
-
-                        {this.props.bio && (
-                            <button onClick={() => this.toggleTextArea()}>
-                                edit bio
-                            </button>
-                        )}
-                        {!this.props.bio && (
-                            <button onClick={() => this.toggleTextArea()}>
-                                add
-                            </button>
-                        )}
+                        <div className="followingSection">
+                            {this.props.bio && (
+                                <button onClick={() => this.toggleTextArea()}>
+                                    edit bio
+                                </button>
+                            )}
+                            {!this.props.bio && (
+                                <button onClick={() => this.toggleTextArea()}>
+                                    add
+                                </button>
+                            )}
+                        </div>
                     </>
                 )}
 
                 <br />
 
                 {this.state.editModeVisible && (
-                    <>
+                    <div className="followingSection">
                         <textarea
                             onChange={(e) => this.handleChange(e)}
                             defaultValue={this.props.bio}
@@ -79,7 +80,7 @@ export default class BioEditor extends Component {
                         )}
                         <br />
                         <button onClick={() => this.saveBio()}>Save</button>
-                    </>
+                    </div>
                 )}
             </>
         );

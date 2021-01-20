@@ -350,6 +350,13 @@ app.get("/getListOfFriendsAndRequests", (req, res) => {
             console.log("error in friendstatus.getListofFriends", err)
         );
 });
+app.post("/logout", (req, res) => {
+    console.log("clicked logout");
+    req.session.userId = null;
+    res.json({
+        success: true,
+    });
+});
 
 app.get("*", function (req, res) {
     if (!req.session.userId) {

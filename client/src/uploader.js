@@ -39,15 +39,24 @@ export default class uploader extends Component {
     render() {
         return (
             <>
-                <div>
-                    <p onClick={() => this.props.toggleUploader()}>close</p>
-                    <h1>uploader</h1>
-                    <input
-                        onChange={(e) => this.handleFileChange(e)}
-                        type="file"
-                        name="profilepic"
-                        accept="image/*"
+                <div className="uploader-container">
+                    <img
+                        src="/8059853131585493763-128.png"
+                        onClick={() => this.props.toggleUploader()}
                     />
+                    <h5>Select your new Profile Picture...</h5>
+                    <label className="custom-file-upload">
+                        <img src="/2532796311585493757-128.png" />
+                        <input
+                            onChange={(e) => this.handleFileChange(e)}
+                            type="file"
+                            name="profilepic"
+                            accept="image/*"
+                        />
+                    </label>
+                    <br />
+                    <br />
+
                     {this.state.error && (
                         <span>Something went wrong, please try again.</span>
                     )}

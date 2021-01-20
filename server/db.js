@@ -75,7 +75,7 @@ module.exports.getMostRecentUsers = () => {
     const q = `SELECT first, last, profilepic, bio, id 
                 FROM users                    
                 ORDER BY id 
-                DESC LIMIT 3;
+                DESC LIMIT 6;
     `;
     return db.query(q);
 };
@@ -113,7 +113,7 @@ module.exports.getMostRecentMessages = () => {
     JOIN users
     ON ( user_id = users.id)
     ORDER BY timestamp DESC
-    LIMIT 5;
+    LIMIT 4;
     `;
     return db.query(q);
 };

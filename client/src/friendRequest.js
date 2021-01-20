@@ -39,7 +39,6 @@ export default function FriendRequest() {
     return (
         <>
             <button onClick={handleClick}>{buttonText}</button>
-            <span>{otherUserId}</span>
         </>
     );
 }

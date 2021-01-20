@@ -61,95 +61,133 @@ export default class App extends Component {
         });
     }
 
+    logout() {
+        console.log("logout");
+        axios.post("/logout").then((result) => {
+            console.log("loggedout", result);
+            window.location = "/welcome#/login";
+        });
+    }
+
     render() {
         return (
             <>
                 <BrowserRouter>
+                    {/* <div className="header-placeholder">
+                        <p></p>
+                    </div> */}
                     <header>
-                        <a className="logo" href="#">
-                            <img src="" alt="Logo" />
-                        </a>
+                        <div>
+                            <a className="logo" href="#">
+                                <img src="/logo.png" alt="Logo" />
+                            </a>
+                        </div>
                         <nav>
-                            <Link to="/chat">Chat</Link>
-                            <br />
-                            <Link to="/users">Seach Users</Link>
-                            <br />
-                            <Link to="/">Profile</Link>
+                            <ul>
+                                <li>
+                                    <Link to="/chat">Chat</Link>
+                                </li>
+                                <li>
+                                    <Link to="/users">Users</Link>
+                                </li>
+                                <li>
+                                    <Link to="/">Profile</Link>
+                                </li>
+                                <br />
+                                <br />
+
+                                <li>
+                                    <button onClick={() => this.logout()}>
+                                        Logout
+                                    </button>
+                                </li>
+                            </ul>
                         </nav>
 
-                        <Link to="/">
-                            <ProfilePic
-                                profilepic={this.state.profilepic}
-                                // toggleUploader={this.toggleUploader}
-                            />
-                        </Link>
-                    </header>
-
-                    <Route
-                        exact
-                        path="/"
-                        render={() => (
-                            <div className="component">
-                                <Profile
-                                    first={this.state.first}
-                                    last={this.state.last}
-                                    bio={this.state.bio}
+                        <div>
+                            <Link to="/">
+                                <ProfilePic
                                     profilepic={this.state.profilepic}
-                                    toggleUploader={this.toggleUploader}
-                                    updateProfile={this.updateProfile}
+                                    // toggleUploader={this.toggleUploader}
                                 />
-                            </div>
-                        )}
-                    />
-
-                    <Route
-                        path="/users"
-                        render={() => (
-                            <div className="component">
-                                <FindPeople />
-                            </div>
-                        )}
-                    />
-
-                    <Route
-                        path="/friends"
-                        render={() => (
-                            <div className="component">
-                                <Friends />
-                            </div>
-                        )}
-                    />
-
-                    <Route
-                        path="/user/:id"
-                        render={(props) => (
-                            <div className="component">
-                                <OtherProfile
-                                    match={props.match}
-                                    key={props.match.url}
-                                    history={props.history}
-                                />
-                            </div>
-                        )}
-                    />
-
-                    <Route
-                        path="/chat"
-                        render={() => (
-                            <div className="component">
-                                <Chat />
-                            </div>
-                        )}
-                    />
-
-                    {this.state.uploaderIsVisible && (
-                        <div className="component">
-                            <Uploader
-                                setProfilepic={this.setProfilepic}
-                                toggleUploader={this.toggleUploader}
-                            />
+                            </Link>
                         </div>
-                    )}
+                    </header>
+                    <section>
+                        <Route
+                            exact
+                            path="/"
+                            render={() => (
+                                <div className="component">
+                                    <Profile
+                                        first={this.state.first}
+                                        last={this.state.last}
+                                        bio={this.state.bio}
+                                        profilepic={this.state.profilepic}
+                                        toggleUploader={this.toggleUploader}
+                                        updateProfile={this.updateProfile}
+                                    />
+                                </div>
+                            )}
+                        />
+
+                        <Route
+                            path="/users"
+                            render={() => (
+                                <div className="component">
+                                    <h1 className="title">Find Friends...</h1>
+
+                                    <FindPeople />
+                                </div>
+                            )}
+                        />
+
+                        <Route
+                            path="/friends"
+                            render={() => (
+                                <div className="component">
+                                    <Friends />
+                                </div>
+                            )}
+                        />
+
+                        <Route
+                            path="/user/:id"
+                            render={(props) => (
+                                <div className="component">
+                                    <OtherProfile
+                                        match={props.match}
+                                        key={props.match.url}
+                                        history={props.history}
+                                    />
+                                </div>
+                            )}
+                        />
+
+                        <Route
+                            path="/chat"
+                            render={() => (
+                                <>
+                                    <h1 className="title">
+                                        Write Something...
+                                    </h1>
+
+                                    <div className="component">
+                                        <Chat />
+                                    </div>
+                                </>
+                            )}
+                        />
+
+                        {this.state.uploaderIsVisible && (
+                            <div className="component">
+                                <Uploader
+                                    setProfilepic={this.setProfilepic}
+                                    toggleUploader={this.toggleUploader}
+                                />
+                            </div>
+                        )}
+                    </section>
                 </BrowserRouter>
             </>
         );

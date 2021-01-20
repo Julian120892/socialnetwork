@@ -37,27 +37,32 @@ export default function FindPeople() {
     }, [search]);
 
     return (
-        <div>
+        <div className="find-container">
             <input
+                className="input"
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search"
             />
 
-            <div>
-                {!results.length && search && <li>Nothing Found</li>}
+            <div className="user-container">
+                {!results.length && search && <p>Sorry, Nothing Found.</p>}
                 {results.map((result, index) => (
                     <div key={index} className="usersThumbnail">
                         <Link to={"user/" + result.id}>
                             <>
-                                <img
-                                    className="profile-picture"
-                                    src={result.profilepic}
-                                />
-                                <h2>
-                                    {result.first}
-                                    {result.last}
-                                </h2>
-                                <p>{result.bio}</p>
+                                <div className="thumbnail-picture">
+                                    <img
+                                        className="profile-picture"
+                                        src={result.profilepic}
+                                    />
+                                </div>
+
+                                <div className="text-container">
+                                    <h2>
+                                        {result.first} {result.last}
+                                    </h2>
+                                    <p>{result.bio}</p>
+                                </div>
                             </>
                         </Link>
                     </div>

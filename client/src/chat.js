@@ -20,24 +20,33 @@ export default function Chat() {
 
     if (chatMessages.message) {
         return (
-            <>
-                <h1>This is the Chat</h1>
+            <div className="chat">
                 {chatMessages.message.map((result, index) => (
                     <div key={index} className="chat-container">
-                        <img
-                            className="profile-picture"
-                            src={result.profilepic}
-                        />
-                        <p>
-                            {result.first} {result.last}
-                        </p>
-                        <p>{result.timestamp}</p>
+                        <div className="metadata-container">
+                            {/* <img
+                                className="profile-picture"
+                                src={result.profilepic}
+                            /> */}
+                            <div>
+                                <h5>
+                                    {result.first} {result.last}
+                                </h5>
+                                <span>{result.timestamp}</span>
+                            </div>
+                        </div>
+                        <div></div>
+
                         <h2>{result.messages}</h2>
                     </div>
                 ))}
 
-                <textarea onKeyDown={handleKeyDown} />
-            </>
+                <textarea
+                    className="chat-input"
+                    onKeyDown={handleKeyDown}
+                    placeholder="Send a Message..."
+                />
+            </div>
         );
     } else {
         return (

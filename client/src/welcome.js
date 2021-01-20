@@ -5,14 +5,15 @@ import ResetPassword from "./resetPassword";
 
 export default function Welcome() {
     return (
-        <div>
+        <div className="container">
+            <img className="welcome-logo" src="/logo.png" alt="Logo" />
             <h1>welcome to social network</h1>
             <HashRouter>
-                <div>
+                <>
                     <Route exact path="/" component={Registration} />
                     <Route path="/login" component={Login} />
                     <Route path="/resetPassword" component={ResetPassword} />
-                </div>
+                </>
             </HashRouter>
         </div>
     );
