@@ -93,6 +93,9 @@ export default class App extends Component {
                                 <li>
                                     <Link to="/">Profile</Link>
                                 </li>
+                                <li>
+                                    <Link to="/friends">Friends</Link>
+                                </li>
                                 <br />
                                 <br />
 

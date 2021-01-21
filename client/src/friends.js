@@ -22,51 +22,54 @@ export default function Friends() {
 
     return (
         <>
-            <div>
-                <h1>Requests</h1>
-                {requests.map((result, index) => (
-                    <div key={index} className="usersThumbnail">
-                        <Link to={`/user/${result.id}`}>
-                            <img
-                                className="profile-picture"
-                                src={result.profilepic}
-                            />
-                            <h2>
-                                {result.first}
-                                {result.last}
-                            </h2>
-                        </Link>
+            <div className="outerContainer">
+                <div className="friends-container">
+                    <h1 className="title">Requests</h1>
+                    {requests.map((result, index) => (
+                        <div key={index} className="usersThumbnail">
+                            <Link to={`/user/${result.id}`}>
+                                <img
+                                    className="profile-picture"
+                                    src={result.profilepic}
+                                />
+                                <h2>
+                                    {result.first} {""}
+                                    {result.last}
+                                </h2>
+                            </Link>
+                            <button
+                                id={result.id}
+                                onClick={(e) => dispatch(acceptRequest(e))}
+                            >
+                                Accept
+                            </button>
+                        </div>
+                    ))}
+                </div>
 
-                        <button
-                            id={result.id}
-                            onClick={(e) => dispatch(acceptRequest(e))}
-                        >
-                            Accept
-                        </button>
-                    </div>
-                ))}
-
-                <h1>Friends</h1>
-                {friends.map((result, index) => (
-                    <div key={index} className="usersThumbnail">
-                        <Link to={`/user/${result.id}`}>
-                            <img
-                                className="profile-picture"
-                                src={result.profilepic}
-                            />
-                            <h2>
-                                {result.first}
-                                {result.last}
-                            </h2>
-                        </Link>
-                        <button
-                            id={result.id}
-                            onClick={(e) => dispatch(unfriendFriend(e))}
-                        >
-                            Unfriend
-                        </button>
-                    </div>
-                ))}
+                <div className="friends-container">
+                    <h1 className="title">Friends</h1>
+                    {friends.map((result, index) => (
+                        <div key={index} className="usersThumbnail">
+                            <Link to={`/user/${result.id}`}>
+                                <img
+                                    className="profile-picture"
+                                    src={result.profilepic}
+                                />
+                                <h2>
+                                    {result.first} {""}
+                                    {result.last}
+                                </h2>
+                            </Link>
+                            <button
+                                id={result.id}
+                                onClick={(e) => dispatch(unfriendFriend(e))}
+                            >
+                                Unfriend
+                            </button>
+                        </div>
+                    ))}
+                </div>
             </div>
         </>
     );

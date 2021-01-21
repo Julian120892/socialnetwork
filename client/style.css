@@ -357,6 +357,51 @@ input[type="file"] {
     color: black;
 }
 
+/*-----Friends------*/
+
+.outerContainer {
+    background-color: transparent;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    height: 90vh;
+    overflow: scroll;
+}
+
+.friends-container {
+    background-color: transparent;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    overflow: scroll;
+}
+
+.friends-container .usersThumbnail {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.friends-container .usersThumbnail a {
+    text-align: center;
+}
+
+.friends-container button {
+    border: 2px solid black;
+    color: black;
+    width: 100%;
+}
+
+.friends-container button:hover {
+    border: 2px solid grey;
+    color: grey;
+}
+
+.friends-container h1 {
+    text-align: center;
+    width: 100%;
+}
+
 /*-----user search------*/
 .find-container {
     background-color: transparent;
