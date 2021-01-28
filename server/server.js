@@ -7,7 +7,7 @@ const io = require("socket.io")(server, {
             null,
             req.headers.referer.startsWith(
                 "http://localhost:3000" ||
-                    "https://julians-social-network.herokuapp.com/"
+                    "https://julians-social-network.herokuapp.com"
             )
         ),
 });
