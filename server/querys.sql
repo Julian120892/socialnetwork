@@ -1,3 +1,15 @@
+CREATE TABLE users(
+  id SERIAL PRIMARY KEY,
+  first VARCHAR NOT NULL,
+  last VARCHAR NOT NULL,
+  email VARCHAR NOT NULL,
+  password VARCHAR NOT NULL,
+  profilepic VARCHAR NOT NULL,
+  created_at CURRENT_TIMESTAMP NOT NULL,
+  bio VARCHAR
+);
+
+
 CREATE TABLE friendships(
   id SERIAL PRIMARY KEY,
   sender_id INT REFERENCES users(id) NOT NULL,
