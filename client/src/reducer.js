@@ -66,11 +66,15 @@ export function reducer(state = {}, action) {
     if (action.type == "POST_NEW_MESSAGE") {
         const newMessage = [...state.message, action.data];
 
+        console.log("testststst", newMessage);
+
         state = {
             ...state,
             message: newMessage,
         };
     }
+
+    console.log(state);
 
     ///////
     return state;
