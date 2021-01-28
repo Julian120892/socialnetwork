@@ -5,7 +5,7 @@ CREATE TABLE users(
   email VARCHAR NOT NULL,
   password VARCHAR NOT NULL,
   profilepic VARCHAR NOT NULL,
-  created_at CURRENT_TIMESTAMP NOT NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   bio VARCHAR
 );
 
@@ -87,7 +87,7 @@ VALUES (144, 265, false);
 CREATE TABLE chat_messages(
   id SERIAL PRIMARY KEY,
   user_id INT REFERENCES users(id) NOT NULL,
-  messages VARCHAR NOT NULL
+  messages VARCHAR NOT NULL,
   timestamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
